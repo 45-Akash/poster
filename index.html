@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ultimate Coding Prep</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f8f8; /* Light Gray */
+            color: #333;
+            line-height: 1.6;
+        }
+        .bg-pattern {
+            background-image: linear-gradient(to right, #e5e7eb 1px, transparent 1px),
+                              linear-gradient(to bottom, #e5e7eb 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-in-out forwards;
+            opacity: 0;
+        }
+        .slide-up {
+            animation: slideUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .text-orange {
+            color: #ff5722;
+        }
+        .bg-orange-gradient {
+            background: linear-gradient(to right, #ff7043, #ff5722);
+        }
+        .code-block {
+            background-color: #2d3748;
+            color: #a0aec0;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 1s ease-in-out forwards;
+            animation-delay: 1.5s;
+        }
+        @media (min-width: 640px) {
+            .sm\:p-12 {
+                padding: 3rem;
+            }
+        }
+        @media (min-width: 768px) {
+            .md\:p-16 {
+                padding: 4rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-pattern min-h-screen flex items-center justify-center p-4">
+
+    <div class="bg-white p-6 sm:p-12 md:p-16 rounded-3xl shadow-2xl max-w-4xl w-full text-center fade-in" style="animation-delay: 0.2s;">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-2 slide-up">Land Your Dream Job: <br> The Ultimate Placement Prep</h1>
+        <div class="w-20 sm:w-24 h-1 bg-orange-gradient rounded-full mx-auto my-4 sm:my-6 slide-up" style="animation-delay: 0.3s;"></div>
+
+        <h3 class="text-lg sm:text-xl md:text-2xl font-semibold text-gray-600 mb-4 slide-up" style="animation-delay: 0.4s;">
+            Want to learn coding but don't know where to start?
+        </h3>
+        <p class="text-xl sm:text-2xl font-bold text-orange mb-6 slide-up" style="animation-delay: 0.5s;">
+            You're at the right place.
+        </p>
+
+        <div class="code-block text-left slide-up" style="animation-delay: 0.6s;">
+            <span style="color: #48bb78;">function</span> <span style="color: #4299e1;">yourJourneyStartsHere</span>() {
+                <br>&nbsp;&nbsp;<span style="color: #c53030;">console</span>.<span style="color: #a0aec0;">log</span>(<span style="color: #ed8936;">"Your journey to a top placement starts now!"</span>);
+                <br>}
+        </div>
+
+        <div class="space-y-6 sm:space-y-8 text-left">
+            <h3 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-4 slide-up" style="animation-delay: 0.7s;">What You Will Get:</h3>
+            <ul class="space-y-4 sm:space-y-6">
+                <li class="flex items-start">
+                    <span class="text-orange font-bold text-2xl mr-4 slide-up" style="animation-delay: 0.8s;">&bull;</span>
+                    <p class="text-lg text-gray-700 slide-up" style="animation-delay: 0.8s;">
+                        <strong class="text-gray-900">Comprehensive Learning:</strong> In-depth explanations of concepts with hands-on learning.
+                    </p>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-orange font-bold text-2xl mr-4 slide-up" style="animation-delay: 0.9s;">&bull;</span>
+                    <p class="text-lg text-gray-700 slide-up" style="animation-delay: 0.9s;">
+                        <strong class="text-gray-900">Class Notes & Code:</strong> Class session notes and code will be provided right after the session.
+                    </p>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-orange font-bold text-2xl mr-4 slide-up" style="animation-delay: 1.0s;">&bull;</span>
+                    <p class="text-lg text-gray-700 slide-up" style="animation-delay: 1.0s;">
+                        <strong class="text-gray-900">24/7 Doubt Support:</strong> Get continuous support to solve your doubts anytime.
+                    </p>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-orange font-bold text-2xl mr-4 slide-up" style="animation-delay: 1.1s;">&bull;</span>
+                    <p class="text-lg text-gray-700 slide-up" style="animation-delay: 1.1s;">
+                        <strong class="text-gray-900">Real-World Expertise:</strong> Learn from a teacher with real-world experience working in the IT industry.
+                    </p>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-orange font-bold text-2xl mr-4 slide-up" style="animation-delay: 1.2s;">&bull;</span>
+                    <p class="text-lg text-gray-700 slide-up" style="animation-delay: 1.2s;">
+                        <strong class="text-gray-900">Regular Competitions:</strong> Participate in regular coding competitions to track and improve your progress.
+                    </p>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-orange font-bold text-2xl mr-4 slide-up" style="animation-delay: 1.3s;">&bull;</span>
+                    <p class="text-lg text-gray-700 slide-up" style="animation-delay: 1.3s;">
+                        <strong class="text-gray-900">Career Guidance:</strong> Get essential career guidance to shape your professional journey.
+                    </p>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-orange font-bold text-2xl mr-4 slide-up" style="animation-delay: 1.4s;">&bull;</span>
+                    <p class="text-lg text-gray-700 slide-up" style="animation-delay: 1.4s;">
+                        <strong class="text-gray-900">Resume Building:</strong> Receive tips and personalized reviews to build a standout resume.
+                    </p>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-gray-200 slide-up" style="animation-delay: 1.5s;">
+            <p class="text-2xl font-bold text-gray-800 mb-4">
+                Your Journey to get your dream job Starts Here!
+            </p>
+            <p class="text-lg text-gray-600">
+                We have limited slots available, to book your seat, please DM on 9657894262.
+            </p>
+            <a href="https://wa.me/919657894262" target="_blank" class="inline-block mt-4 transition-transform transform hover:scale-110">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Logo" class="w-12 h-12">
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>
