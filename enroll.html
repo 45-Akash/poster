@@ -71,11 +71,11 @@
                     <h3 class="text-sm font-semibold text-gray-900 mb-2">Scan this QR to pay</h3>
                     <img src="assets/upi-qr.png" alt="UPI QR Code" class="w-48 h-48 rounded-lg border shadow-sm"
                          onerror="this.onerror=null;this.src='https://api.qrserver.com/v1/create-qr-code/?size=220x220&data='+encodeURIComponent('upi://pay?pa=9657894262@apl&am=2199&cu=INR');" />
-                    <p class="text-xs text-gray-600 mt-2">Scan with PhonePe / Google Pay / Paytm and complete the payment.</p>
+                    <p class="text-xs text-gray-600 mt-2">Scan with Google Pay / Paytm or any UPI app and complete the payment.</p>
                     <p class="text-xs text-gray-600 mt-2">or click on the button below to pay</p>
                 </div>
                 <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-2">
-                    <a id="payBtn" href="upi://pay?pa=9657894262@apl" class="px-5 py-3 rounded-full cta-glitter text-white font-semibold shadow hover:shadow-lg">Pay via UPI App</a>
+                    <a id="payBtn" href="tez://upi/pay?pa=9657894262@apl" class="px-5 py-3 rounded-full cta-glitter text-white font-semibold shadow hover:shadow-lg">Pay with Google Pay</a>
                     <button id="copyUpi" class="px-1 py-0.5 rounded-md bg-gray-100 text-gray-800 text-sm border border-gray-300 hover:bg-gray-200">Copy UPI ID</button>
                 </div>
                 <p class="text-xs text-gray-600 mb-2">Tip: After the app opens, enter ₹2199 as the amount and complete payment.</p>
@@ -110,7 +110,6 @@
             var upiUrl = 'upi://pay?pa=9657894262@apl';
             var intentUrl = 'intent://upi/pay?pa=9657894262@apl#Intent;scheme=upi;end';
             var gpayUrl = 'tez://upi/pay?pa=9657894262@apl';
-            var phonepeUrl = 'phonepe://pay?pa=9657894262@apl';
             btn.addEventListener('click', function (e) {
                 // Ensure we control navigation for better fallbacks
                 e.preventDefault();
@@ -123,15 +122,13 @@
                 // Try standard UPI link first
                 var timers = [];
                 var clearAll = function(){ timers.forEach(function(t){ clearTimeout(t); }); document.removeEventListener('visibilitychange', clearAll); };
-                // Try generic UPI first
-                window.location.href = upiUrl;
-                // Android-specific intent fallback
+                // Try Google Pay first
+                window.location.href = gpayUrl;
+                // Then generic UPI, then Android intent
+                timers.push(setTimeout(function(){ window.location.href = upiUrl; }, 1200));
                 if (/Android/i.test(ua)) {
-                    timers.push(setTimeout(function(){ window.location.href = intentUrl; }, 1000));
+                    timers.push(setTimeout(function(){ window.location.href = intentUrl; }, 2400));
                 }
-                // Try GPay and PhonePe schemes as last resorts
-                timers.push(setTimeout(function(){ window.location.href = gpayUrl; }, 2000));
-                timers.push(setTimeout(function(){ window.location.href = phonepeUrl; }, 3000));
                 // Clear if app opened
                 document.addEventListener('visibilitychange', clearAll);
             });
