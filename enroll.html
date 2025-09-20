@@ -108,10 +108,10 @@
             <h3 class="text-lg font-semibold text-gray-900 mb-3">Choose a UPI app</h3>
             <p class="text-sm text-gray-600 mb-4">We’ll open the app. Then tap “Pay/Send”, paste UPI ID <span class="font-semibold">9657894262@apl</span>, and enter ₹2199.</p>
             <div class="grid grid-cols-2 gap-3">
-                <a id="openGPay" href="tez://" class="px-4 py-3 rounded-lg bg-blue-600 text-white text-center">Open Google Pay</a>
-                <a id="openPhonePe" href="phonepe://" class="px-4 py-3 rounded-lg bg-violet-600 text-white text-center">Open PhonePe</a>
-                <a id="openPaytm" href="paytmmp://" class="px-4 py-3 rounded-lg bg-gray-800 text-white text-center">Open Paytm</a>
-                <a id="openBhim" href="bhim://" class="px-4 py-3 rounded-lg bg-green-700 text-white text-center">Open BHIM</a>
+                <a id="openGPay" href="#" class="px-4 py-3 rounded-lg bg-blue-600 text-white text-center">Open Google Pay</a>
+                <a id="openPhonePe" href="#" class="px-4 py-3 rounded-lg bg-violet-600 text-white text-center">Open PhonePe</a>
+                <a id="openPaytm" href="#" class="px-4 py-3 rounded-lg bg-gray-800 text-white text-center">Open Paytm</a>
+                <a id="openBhim" href="#" class="px-4 py-3 rounded-lg bg-green-700 text-white text-center">Open BHIM</a>
             </div>
             <div class="flex items-center justify-between mt-4">
                 <button id="copyUpi2" class="px-3 py-2 rounded-md bg-gray-100 text-gray-800 text-sm border border-gray-300 hover:bg-gray-200">Copy UPI ID</button>
@@ -150,13 +150,28 @@
             closeAppModal && closeAppModal.addEventListener('click', hideAppModal);
             appModal && appModal.addEventListener('click', function(e){ if (e.target === appModal) hideAppModal(); });
 
-            function openApp(url){
+            function attemptOpenApp(url, fallbackMsg){
+                var wasHidden = false;
+                var onVisibility = function(){
+                    if (document.hidden) wasHidden = true;
+                };
+                document.addEventListener('visibilitychange', onVisibility, { once: true });
+                var start = Date.now();
+                // Try to open the app
                 window.location.href = url;
+                // After delay, if page did not lose visibility, assume app not installed
+                setTimeout(function(){
+                    document.removeEventListener('visibilitychange', onVisibility, { once: true });
+                    var elapsed = Date.now() - start;
+                    if (!wasHidden && elapsed > 600) {
+                        alert(fallbackMsg + '\nTip: Copy UPI ID 9657894262@apl and use any installed UPI app.');
+                    }
+                }, 800);
             }
-            openGPay && openGPay.addEventListener('click', function(e){ e.preventDefault(); openApp('tez://'); });
-            openPhonePe && openPhonePe.addEventListener('click', function(e){ e.preventDefault(); openApp('phonepe://'); });
-            openPaytm && openPaytm.addEventListener('click', function(e){ e.preventDefault(); openApp('paytmmp://'); });
-            openBhim && openBhim.addEventListener('click', function(e){ e.preventDefault(); openApp('bhim://'); });
+            openGPay && openGPay.addEventListener('click', function(e){ e.preventDefault(); attemptOpenApp('tez://', 'Google Pay not detected on this device.'); });
+            openPhonePe && openPhonePe.addEventListener('click', function(e){ e.preventDefault(); attemptOpenApp('phonepe://', 'PhonePe not detected on this device.'); });
+            openPaytm && openPaytm.addEventListener('click', function(e){ e.preventDefault(); attemptOpenApp('paytmmp://', 'Paytm not detected on this device.'); });
+            openBhim && openBhim.addEventListener('click', function(e){ e.preventDefault(); attemptOpenApp('bhim://', 'BHIM not detected on this device.'); });
 
             copyUpi2 && copyUpi2.addEventListener('click', function(){
                 var upi = '9657894262@apl';
