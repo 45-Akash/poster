@@ -150,28 +150,70 @@
             closeAppModal && closeAppModal.addEventListener('click', hideAppModal);
             appModal && appModal.addEventListener('click', function(e){ if (e.target === appModal) hideAppModal(); });
 
-            function attemptOpenApp(url, fallbackMsg){
-                var wasHidden = false;
-                var onVisibility = function(){
-                    if (document.hidden) wasHidden = true;
-                };
-                document.addEventListener('visibilitychange', onVisibility, { once: true });
-                var start = Date.now();
-                // Try to open the app
-                window.location.href = url;
-                // After delay, if page did not lose visibility, assume app not installed
+            var appConfigs = {
+                gpay: {
+                    label: 'Google Pay',
+                    scheme: 'tez://',
+                    intent: 'intent://upi/pay#Intent;scheme=upi;package=com.google.android.apps.nbu.paisa.user;end',
+                    store: 'market://details?id=com.google.android.apps.nbu.paisa.user'
+                },
+                phonepe: {
+                    label: 'PhonePe',
+                    scheme: 'phonepe://',
+                    intent: 'intent://upi/pay#Intent;scheme=upi;package=com.phonepe.app;end',
+                    store: 'market://details?id=com.phonepe.app'
+                },
+                paytm: {
+                    label: 'Paytm',
+                    scheme: 'paytmmp://',
+                    intent: 'intent://upi/pay#Intent;scheme=upi;package=net.one97.paytm;end',
+                    store: 'market://details?id=net.one97.paytm'
+                },
+                bhim: {
+                    label: 'BHIM',
+                    scheme: 'bhim://',
+                    intent: 'intent://upi/pay#Intent;scheme=upi;package=in.org.npci.upiapp;end',
+                    store: 'market://details?id=in.org.npci.upiapp'
+                }
+            };
+
+            function openAppSequence(config){
+                var appOpened = false;
+                function markOpened(){ appOpened = true; cleanup(); }
+                function cleanup(){
+                    document.removeEventListener('visibilitychange', onVisibility);
+                    window.removeEventListener('pagehide', markOpened);
+                    window.removeEventListener('blur', markOpened);
+                }
+                function onVisibility(){ if (document.hidden) markOpened(); }
+                document.addEventListener('visibilitychange', onVisibility);
+                window.addEventListener('pagehide', markOpened);
+                window.addEventListener('blur', markOpened);
+
+                // Try custom scheme first
+                window.location.href = config.scheme;
+
+                // After 1.2s, try explicit intent with package (Android)
+                setTimeout(function(){ if (!appOpened) { window.location.href = config.intent; } }, 1200);
+
+                // After 2.4s, if still not opened, prompt to install or use another app
                 setTimeout(function(){
-                    document.removeEventListener('visibilitychange', onVisibility, { once: true });
-                    var elapsed = Date.now() - start;
-                    if (!wasHidden && elapsed > 600) {
-                        alert(fallbackMsg + '\nTip: Copy UPI ID 9657894262@apl and use any installed UPI app.');
+                    if (!appOpened) {
+                        cleanup();
+                        var msg = config.label + ' not detected. Install it from Play Store or use another app.';
+                        if (confirm(msg + '\nOpen Play Store?')) {
+                            window.location.href = config.store;
+                        } else {
+                            alert('Tip: Copy UPI ID 9657894262@apl and use any installed UPI app.');
+                        }
                     }
-                }, 800);
+                }, 2400);
             }
-            openGPay && openGPay.addEventListener('click', function(e){ e.preventDefault(); attemptOpenApp('tez://', 'Google Pay not detected on this device.'); });
-            openPhonePe && openPhonePe.addEventListener('click', function(e){ e.preventDefault(); attemptOpenApp('phonepe://', 'PhonePe not detected on this device.'); });
-            openPaytm && openPaytm.addEventListener('click', function(e){ e.preventDefault(); attemptOpenApp('paytmmp://', 'Paytm not detected on this device.'); });
-            openBhim && openBhim.addEventListener('click', function(e){ e.preventDefault(); attemptOpenApp('bhim://', 'BHIM not detected on this device.'); });
+
+            openGPay && openGPay.addEventListener('click', function(e){ e.preventDefault(); openAppSequence(appConfigs.gpay); });
+            openPhonePe && openPhonePe.addEventListener('click', function(e){ e.preventDefault(); openAppSequence(appConfigs.phonepe); });
+            openPaytm && openPaytm.addEventListener('click', function(e){ e.preventDefault(); openAppSequence(appConfigs.paytm); });
+            openBhim && openBhim.addEventListener('click', function(e){ e.preventDefault(); openAppSequence(appConfigs.bhim); });
 
             copyUpi2 && copyUpi2.addEventListener('click', function(){
                 var upi = '9657894262@apl';
