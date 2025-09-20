@@ -182,11 +182,24 @@
                     alert('Open on your phone. Hint: Copy UPI ID 9657894262@apl and pay in your UPI app.');
                     return;
                 }
-                // Try common UPI apps; whichever is installed should open
-                openAppSequence(appConfigs.gpay);
-                setTimeout(function(){ openAppSequence(appConfigs.phonepe); }, 200);
-                setTimeout(function(){ openAppSequence(appConfigs.paytm); }, 400);
-                setTimeout(function(){ openAppSequence(appConfigs.bhim); }, 600);
+                var wasHidden = false;
+                function onVis(){ if (document.hidden) { wasHidden = true; document.removeEventListener('visibilitychange', onVis); } }
+                document.addEventListener('visibilitychange', onVis);
+                // Let the user choose the default UPI app
+                window.location.href = 'upi://pay';
+                // If nothing handled it on Android, try a generic intent
+                setTimeout(function(){
+                    if (!wasHidden && /Android/i.test(ua)) {
+                        window.location.href = 'intent://upi/pay#Intent;scheme=upi;end';
+                    }
+                }, 1200);
+                // Final notice if still not opened
+                setTimeout(function(){
+                    document.removeEventListener('visibilitychange', onVis);
+                    if (!wasHidden) {
+                        alert('Could not open a UPI app. Copy UPI ID 9657894262@apl and pay in any UPI app.');
+                    }
+                }, 2500);
             });
 
             // Copy helper remains for the small button on the page
