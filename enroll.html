@@ -78,7 +78,7 @@
                     <a id="payBtn" href="#" class="px-5 py-3 rounded-full cta-glitter text-white font-semibold shadow hover:shadow-lg">Pay via UPI</a>
                     <button id="copyUpi" class="px-1 py-0.5 rounded-md bg-gray-100 text-gray-800 text-sm border border-gray-300 hover:bg-gray-200">Copy UPI ID</button>
                 </div>
-                <p class="text-xs text-gray-600 mb-2">Tip: After the app opens, enter ₹2199 as the amount and complete payment.</p>
+                <p class="text-xs text-gray-600 mb-2">Tip: Your UPI app will open. Tap Pay/Send, paste <span class="font-semibold">9657894262@apl</span>, enter ₹2199, and complete payment.</p>
                 <div class="mt-2 flex flex-wrap items-center gap-4 text-sm text-gray-600">
                     <span class="flex items-center gap-1">🔒 Secure UPI</span>
                     <span class="flex items-center gap-1">⏳ Limited seats</span>
@@ -102,54 +102,13 @@
         </div>
     </div>
 
-    <!-- App picker modal -->
-    <div id="appModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center p-4">
-        <div class="bg-white rounded-2xl p-5 w-full max-w-md shadow-2xl">
-            <h3 class="text-lg font-semibold text-gray-900 mb-3">Choose a UPI app</h3>
-            <p class="text-sm text-gray-600 mb-4">We’ll open the app. Then tap “Pay/Send”, paste UPI ID <span class="font-semibold">9657894262@apl</span>, and enter ₹2199.</p>
-            <div class="grid grid-cols-2 gap-3">
-                <a id="openGPay" href="#" class="px-4 py-3 rounded-lg bg-blue-600 text-white text-center">Open Google Pay</a>
-                <a id="openPhonePe" href="#" class="px-4 py-3 rounded-lg bg-violet-600 text-white text-center">Open PhonePe</a>
-                <a id="openPaytm" href="#" class="px-4 py-3 rounded-lg bg-gray-800 text-white text-center">Open Paytm</a>
-                <a id="openBhim" href="#" class="px-4 py-3 rounded-lg bg-green-700 text-white text-center">Open BHIM</a>
-            </div>
-            <div class="flex items-center justify-between mt-4">
-                <button id="copyUpi2" class="px-3 py-2 rounded-md bg-gray-100 text-gray-800 text-sm border border-gray-300 hover:bg-gray-200">Copy UPI ID</button>
-                <button id="closeAppModal" class="px-4 py-2 rounded-md bg-gray-100 text-gray-800 border border-gray-300 hover:bg-gray-200">Close</button>
-            </div>
-        </div>
-    </div>
+    <!-- Removed app picker modal -->
 
     
     <script>
         (function () {
             var btn = document.getElementById('payBtn');
             if (!btn) return;
-            var appModal = document.getElementById('appModal');
-            var closeAppModal = document.getElementById('closeAppModal');
-            var openGPay = document.getElementById('openGPay');
-            var openPhonePe = document.getElementById('openPhonePe');
-            var openPaytm = document.getElementById('openPaytm');
-            var openBhim = document.getElementById('openBhim');
-            var copyUpi2 = document.getElementById('copyUpi2');
-
-            function showAppModal(){ appModal.classList.remove('hidden'); appModal.classList.add('flex'); }
-            function hideAppModal(){ appModal.classList.add('hidden'); appModal.classList.remove('flex'); }
-
-            btn.addEventListener('click', function(e){
-                e.preventDefault();
-                var ua = navigator.userAgent || '';
-                var isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
-                if (!isMobile) {
-                    alert('Open on your phone. Then choose an app, paste UPI ID 9657894262@apl, and pay.');
-                    return;
-                }
-                showAppModal();
-            });
-
-            closeAppModal && closeAppModal.addEventListener('click', hideAppModal);
-            appModal && appModal.addEventListener('click', function(e){ if (e.target === appModal) hideAppModal(); });
-
             var appConfigs = {
                 gpay: {
                     label: 'Google Pay',
@@ -215,12 +174,24 @@
                 t3 = setTimeout(function(){ clearTimers(); cleanup(); }, 5000);
             }
 
-            openGPay && openGPay.addEventListener('click', function(e){ e.preventDefault(); openAppSequence(appConfigs.gpay); });
-            openPhonePe && openPhonePe.addEventListener('click', function(e){ e.preventDefault(); openAppSequence(appConfigs.phonepe); });
-            openPaytm && openPaytm.addEventListener('click', function(e){ e.preventDefault(); openAppSequence(appConfigs.paytm); });
-            openBhim && openBhim.addEventListener('click', function(e){ e.preventDefault(); openAppSequence(appConfigs.bhim); });
+            btn.addEventListener('click', function(e){
+                e.preventDefault();
+                var ua = navigator.userAgent || '';
+                var isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
+                if (!isMobile) {
+                    alert('Open on your phone. Hint: Copy UPI ID 9657894262@apl and pay in your UPI app.');
+                    return;
+                }
+                // Try common UPI apps; whichever is installed should open
+                openAppSequence(appConfigs.gpay);
+                setTimeout(function(){ openAppSequence(appConfigs.phonepe); }, 200);
+                setTimeout(function(){ openAppSequence(appConfigs.paytm); }, 400);
+                setTimeout(function(){ openAppSequence(appConfigs.bhim); }, 600);
+            });
 
-            copyUpi2 && copyUpi2.addEventListener('click', function(){
+            // Copy helper remains for the small button on the page
+            var copyBtn2 = document.getElementById('copyUpi2');
+            copyBtn2 && copyBtn2.addEventListener('click', function(){
                 var upi = '9657894262@apl';
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard.writeText(upi).then(function(){ alert('UPI ID copied: ' + upi); });
