@@ -179,7 +179,9 @@
 
             function openAppSequence(config){
                 var appOpened = false;
-                function markOpened(){ appOpened = true; cleanup(); }
+                var t1 = null, t2 = null, t3 = null;
+                function clearTimers(){ if (t1) clearTimeout(t1); if (t2) clearTimeout(t2); if (t3) clearTimeout(t3); }
+                function markOpened(){ appOpened = true; clearTimers(); cleanup(); }
                 function cleanup(){
                     document.removeEventListener('visibilitychange', onVisibility);
                     window.removeEventListener('pagehide', markOpened);
@@ -193,11 +195,11 @@
                 // Try custom scheme first
                 window.location.href = config.scheme;
 
-                // After 1.2s, try explicit intent with package (Android)
-                setTimeout(function(){ if (!appOpened) { window.location.href = config.intent; } }, 1200);
+                // After 1.2s, try explicit intent with package (Android) ONLY if page stayed visible
+                t1 = setTimeout(function(){ if (!appOpened) { window.location.href = config.intent; } }, 1200);
 
                 // After 2.4s, if still not opened, prompt to install or use another app
-                setTimeout(function(){
+                t2 = setTimeout(function(){
                     if (!appOpened) {
                         cleanup();
                         var msg = config.label + ' not detected. Install it from Play Store or use another app.';
@@ -208,6 +210,9 @@
                         }
                     }
                 }, 2400);
+
+                // Safety timeout to ensure cleanup even if nothing happens
+                t3 = setTimeout(function(){ clearTimers(); cleanup(); }, 5000);
             }
 
             openGPay && openGPay.addEventListener('click', function(e){ e.preventDefault(); openAppSequence(appConfigs.gpay); });
