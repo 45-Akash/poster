@@ -72,13 +72,13 @@
                     <img src="assets/upi-qr.png" alt="UPI QR Code" class="w-48 h-48 rounded-lg border shadow-sm"
                          onerror="this.onerror=null;this.src='https://api.qrserver.com/v1/create-qr-code/?size=220x220&data='+encodeURIComponent('upi://pay?pa=9657894262@apl&am=2199&cu=INR');" />
                     <p class="text-xs text-gray-600 mt-2">Scan with Google Pay / Paytm or any UPI app and complete the payment.</p>
-                    <p class="text-xs text-gray-600 mt-2">or click on the button below to pay</p>
+                    <p class="text-xs text-gray-600 mt-2">Or copy the details below and pay manually in your UPI app.</p>
                 </div>
                 <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-2">
-                    <a id="payBtn" href="#" class="px-5 py-3 rounded-full cta-glitter text-white font-semibold shadow hover:shadow-lg">Pay via UPI</a>
-                    <button id="copyUpi" class="px-1 py-0.5 rounded-md bg-gray-100 text-gray-800 text-sm border border-gray-300 hover:bg-gray-200">Copy UPI ID</button>
+                    <button id="copyUpi" class="px-3 py-2 rounded-md bg-gray-100 text-gray-800 text-sm border border-gray-300 hover:bg-gray-200">Copy UPI ID</button>
+                    <button id="copyMobile" class="px-3 py-2 rounded-md bg-gray-100 text-gray-800 text-sm border border-gray-300 hover:bg-gray-200">Copy Mobile Number</button>
                 </div>
-                <p class="text-xs text-gray-600 mb-2">Tip: Your UPI app will open. Tap Pay/Send, paste <span class="font-semibold">9657894262@apl</span>, enter ₹2199, and complete payment.</p>
+                <p class="text-xs text-gray-600 mb-2">How to pay: Open your UPI app → Pay/Send → paste <span class="font-semibold">9657894262@apl</span> or <span class="font-semibold">9657894262</span> → enter ₹2199 → complete payment.</p>
                 <div class="mt-2 flex flex-wrap items-center gap-4 text-sm text-gray-600">
                     <span class="flex items-center gap-1">🔒 Secure UPI</span>
                     <span class="flex items-center gap-1">⏳ Limited seats</span>
@@ -107,8 +107,7 @@
     
     <script>
         (function () {
-            var btn = document.getElementById('payBtn');
-            if (!btn) return;
+            // Copy helpers only (manual payment flow)
             var appConfigs = {
                 gpay: {
                     label: 'Google Pay',
@@ -136,83 +135,10 @@
                 }
             };
 
-            function openAppSequence(config){
-                var appOpened = false;
-                var t1 = null, t2 = null, t3 = null;
-                function clearTimers(){ if (t1) clearTimeout(t1); if (t2) clearTimeout(t2); if (t3) clearTimeout(t3); }
-                function markOpened(){ appOpened = true; clearTimers(); cleanup(); }
-                function cleanup(){
-                    document.removeEventListener('visibilitychange', onVisibility);
-                    window.removeEventListener('pagehide', markOpened);
-                    window.removeEventListener('blur', markOpened);
-                }
-                function onVisibility(){ if (document.hidden) markOpened(); }
-                document.addEventListener('visibilitychange', onVisibility);
-                window.addEventListener('pagehide', markOpened);
-                window.addEventListener('blur', markOpened);
-
-                // Try custom scheme first
-                window.location.href = config.scheme;
-
-                // After 1.2s, try explicit intent with package (Android) ONLY if page stayed visible
-                t1 = setTimeout(function(){ if (!appOpened) { window.location.href = config.intent; } }, 1200);
-
-                // After 2.4s, if still not opened, prompt to install or use another app
-                t2 = setTimeout(function(){
-                    if (!appOpened) {
-                        cleanup();
-                        var msg = config.label + ' not detected. Install it from Play Store or use another app.';
-                        if (confirm(msg + '\nOpen Play Store?')) {
-                            window.location.href = config.store;
-                        } else {
-                            alert('Tip: Copy UPI ID 9657894262@apl and use any installed UPI app.');
-                        }
-                    }
-                }, 2400);
-
-                // Safety timeout to ensure cleanup even if nothing happens
-                t3 = setTimeout(function(){ clearTimers(); cleanup(); }, 5000);
-            }
-
-            btn.addEventListener('click', function(e){
-                e.preventDefault();
-                var ua = navigator.userAgent || '';
-                var isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
-                if (!isMobile) {
-                    alert('Open on your phone. Hint: Copy UPI ID 9657894262@apl and pay in your UPI app.');
-                    return;
-                }
-                var wasHidden = false;
-                function onVis(){ if (document.hidden) { wasHidden = true; document.removeEventListener('visibilitychange', onVis); } }
-                document.addEventListener('visibilitychange', onVis);
-                // Let the user choose the default UPI app
-                window.location.href = 'upi://pay';
-                // If nothing handled it on Android, try a generic intent
-                setTimeout(function(){
-                    if (!wasHidden && /Android/i.test(ua)) {
-                        window.location.href = 'intent://upi/pay#Intent;scheme=upi;end';
-                    }
-                }, 1200);
-                // Final notice if still not opened
-                setTimeout(function(){
-                    document.removeEventListener('visibilitychange', onVis);
-                    if (!wasHidden) {
-                        alert('Could not open a UPI app. Copy UPI ID 9657894262@apl and pay in any UPI app.');
-                    }
-                }, 2500);
-            });
+            // Remove auto app-opening; rely on manual flow
 
             // Copy helper remains for the small button on the page
-            var copyBtn2 = document.getElementById('copyUpi2');
-            copyBtn2 && copyBtn2.addEventListener('click', function(){
-                var upi = '9657894262@apl';
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(upi).then(function(){ alert('UPI ID copied: ' + upi); });
-                } else {
-                    var t = document.createElement('textarea');
-                    t.value = upi; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); alert('UPI ID copied: ' + upi); } catch(e) {} finally { document.body.removeChild(t); }
-                }
-            });
+            // No secondary copy button in modal (modal removed)
             var copyBtn = document.getElementById('copyUpi');
             copyBtn && copyBtn.addEventListener('click', function(){
                 var upi = '9657894262@apl';
@@ -221,6 +147,16 @@
                 } else {
                     var t = document.createElement('textarea');
                     t.value = upi; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); alert('UPI ID copied: ' + upi); } catch(e) {} finally { document.body.removeChild(t); }
+                }
+            });
+            var copyMobile = document.getElementById('copyMobile');
+            copyMobile && copyMobile.addEventListener('click', function(){
+                var mobile = '9657894262';
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(mobile).then(function(){ alert('Mobile number copied: ' + mobile); });
+                } else {
+                    var t = document.createElement('textarea');
+                    t.value = mobile; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); alert('Mobile number copied: ' + mobile); } catch(e) {} finally { document.body.removeChild(t); }
                 }
             });
         })();
