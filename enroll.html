@@ -70,12 +70,12 @@
                 <div class="mt-3 mb-4">
                     <h3 class="text-sm font-semibold text-gray-900 mb-2">Scan this QR to pay</h3>
                     <img src="assets/upi-qr.png" alt="UPI QR Code" class="w-48 h-48 rounded-lg border shadow-sm"
-                         onerror="this.onerror=null;this.src='https://api.qrserver.com/v1/create-qr-code/?size=220x220&data='+encodeURIComponent('upi://pay?pa=9657894262@ybl&am=2199&cu=INR');" />
+                         onerror="this.onerror=null;this.src='https://api.qrserver.com/v1/create-qr-code/?size=220x220&data='+encodeURIComponent('upi://pay?pa=9657894262@apl&am=2199&cu=INR');" />
                     <p class="text-xs text-gray-600 mt-2">Scan with PhonePe / Google Pay / Paytm and complete the payment.</p>
                     <p class="text-xs text-gray-600 mt-2">or click on the button below to pay</p>
                 </div>
                 <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-2">
-                    <a id="payBtn" href="upi://pay?pa=9657894262@ybl&am=2199&cu=INR" class="px-5 py-3 rounded-full cta-glitter text-white font-semibold shadow hover:shadow-lg">Pay ₹2199 (Early Bird)</a>
+                    <a id="payBtn" href="upi://pay?pa=9657894262@apl&am=2199&cu=INR" class="px-5 py-3 rounded-full cta-glitter text-white font-semibold shadow hover:shadow-lg">Pay ₹2199 (Early Bird)</a>
                 </div>
                 <div class="mt-2 flex flex-wrap items-center gap-4 text-sm text-gray-600">
                     <span class="flex items-center gap-1">🔒 Secure UPI</span>
@@ -105,10 +105,10 @@
         (function () {
             var btn = document.getElementById('payBtn');
             if (!btn) return;
-            var upiUrl = 'upi://pay?pa=9657894262@ybl&am=2199&cu=INR';
-            var intentUrl = 'intent://upi/pay?pa=9657894262@ybl&am=2199&cu=INR#Intent;scheme=upi;end';
-            var gpayUrl = 'tez://upi/pay?pa=9657894262@ybl&am=2199&cu=INR';
-            var phonepeUrl = 'phonepe://pay?pa=9657894262@ybl&am=2199&cu=INR';
+            var upiUrl = 'upi://pay?pa=9657894262@apl&am=2199&cu=INR';
+            var intentUrl = 'intent://upi/pay?pa=9657894262@apl&am=2199&cu=INR#Intent;scheme=upi;end';
+            var gpayUrl = 'tez://upi/pay?pa=9657894262@apl&am=2199&cu=INR';
+            var phonepeUrl = 'phonepe://pay?pa=9657894262@apl&am=2199&cu=INR';
             btn.addEventListener('click', function (e) {
                 // Ensure we control navigation for better fallbacks
                 e.preventDefault();
