@@ -74,11 +74,14 @@
                     <p class="text-xs text-gray-600 mt-2">Scan with Google Pay / Paytm or any UPI app and complete the payment.</p>
                     <p class="text-xs text-gray-600 mt-2">Or copy the details below and pay manually in your UPI app.</p>
                 </div>
-                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-2">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
                     <button id="copyUpi" class="px-3 py-2 rounded-md bg-gray-100 text-gray-800 text-sm border border-gray-300 hover:bg-gray-200">Copy UPI ID</button>
                     <button id="copyMobile" class="px-3 py-2 rounded-md bg-gray-100 text-gray-800 text-sm border border-gray-300 hover:bg-gray-200">Copy Mobile Number</button>
                 </div>
-                <p class="text-xs text-gray-600 mb-2">How to pay: Open your UPI app → Pay/Send → paste <span class="font-semibold">9657894262@apl</span> or <span class="font-semibold">9657894262</span> → enter amount (suggested <span class="font-semibold">₹2199</span>) → complete payment.</p>
+                <div class="mt-3">
+                    <button id="payViaUpi" class="w-full sm:w-auto px-6 py-3 rounded-full cta-glitter text-white font-semibold shadow hover:shadow-lg">Pay via UPI</button>
+                </div>
+                <p class="text-xs text-gray-600 mb-2">How to pay: Tap <span class="font-semibold">Pay via UPI</span> (your UPI app opens and asks for amount), or open your UPI app → Pay/Send → paste <span class="font-semibold">9657894262@apl</span> or <span class="font-semibold">9657894262</span> → enter amount (suggested <span class="font-semibold">₹2199</span>) → complete payment.</p>
                 <div class="mt-2 flex flex-wrap items-center gap-4 text-sm text-gray-600">
                     <span class="flex items-center gap-1">🔒 Secure UPI</span>
                     <span class="flex items-center gap-1">⏳ Limited seats</span>
@@ -135,7 +138,34 @@
                 }
             };
 
-            // Remove auto app-opening; rely on manual flow
+            // Add Pay via UPI: open generic UPI handler without preset amount
+            var payViaUpi = document.getElementById('payViaUpi');
+            payViaUpi && payViaUpi.addEventListener('click', function(e){
+                e.preventDefault();
+                var ua = navigator.userAgent || '';
+                var isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
+                if (!isMobile) {
+                    alert('Open on your phone. Tip: Copy UPI ID 9657894262@apl and pay via your UPI app.');
+                    return;
+                }
+                var wasHidden = false;
+                function onVis(){ if (document.hidden) { wasHidden = true; document.removeEventListener('visibilitychange', onVis); } }
+                document.addEventListener('visibilitychange', onVis);
+                // Generic UPI handler, amount not preset → app will ask user
+                window.location.href = 'upi://pay?pa=9657894262@apl&cu=INR';
+                // Android generic intent fallback
+                setTimeout(function(){
+                    if (!wasHidden && /Android/i.test(ua)) {
+                        window.location.href = 'intent://upi/pay?pa=9657894262@apl&cu=INR#Intent;scheme=upi;end';
+                    }
+                }, 1000);
+                // If still not opened, guide user
+                setTimeout(function(){
+                    if (!wasHidden) {
+                        alert('Could not open a UPI app. Copy UPI ID 9657894262@apl and pay manually in your UPI app.');
+                    }
+                }, 2200);
+            });
 
             // Copy helper remains for the small button on the page
             // No secondary copy button in modal (modal removed)
