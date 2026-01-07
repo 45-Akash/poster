@@ -47,48 +47,80 @@
 </head>
 <body class="bg-pattern min-h-screen flex items-center justify-center p-4">
 
-    <div class="bg-white p-6 sm:p-12 md:p-16 rounded-3xl shadow-2xl max-w-3xl w-full fade-in coding-background" style="animation-delay: 0.2s;">
+    <div class="bg-white p-6 sm:p-12 md:p-16 rounded-3xl shadow-2xl max-w-4xl w-full fade-in coding-background" style="animation-delay: 0.2s;">
         <div class="text-center">
-            <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-2">Course Enrollment</h1>
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-2">Choose Your Course</h1>
             <div class="w-20 sm:w-24 h-1 bg-orange-gradient rounded-full mx-auto my-4"></div>
-            <p class="text-gray-700">Secure your seat for the 3-month, beginner-friendly coding course.</p>
+            <p class="text-gray-700">Select the course you want to enroll in</p>
         </div>
 
         <div class="mt-8 grid sm:grid-cols-2 gap-6">
-            <div class="border rounded-2xl p-5">
-                <h2 class="text-xl font-semibold text-gray-900 mb-2">Fee Structure</h2>
-                <ul class="space-y-2 text-gray-700">
-                    <li><span class="font-semibold">Original Fee</span>: <span class="line-through">₹2499</span></li>
-                    <li><span class="font-semibold">Early Bird Offer</span>: <span class="text-green-600 font-bold">₹2199</span> <span class="badge">till 2 Oct 2025</span></li>
-                    <li class="text-sm text-gray-600">Duration: 3 months (90 days)</li>
-                    <li class="text-sm text-gray-600">Value: ₹2199 / 90 days ≈ <span class="font-semibold text-green-700">₹24/day</span> — cheaper than a cup of coffee</li>
+            <div class="border-2 border-gray-200 rounded-2xl p-6 hover:shadow-xl transition-all duration-300 hover:border-orange-400">
+                <div class="text-center mb-4">
+                    <span class="text-5xl">💻</span>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-3 text-center">Programming Fundamentals</h3>
+                <p class="text-gray-600 text-center mb-4">Master C++, Java & Python</p>
+                
+                <div class="mb-4 p-4 bg-gray-50 rounded-lg">
+                    <p class="text-sm text-gray-700"><span class="font-semibold">Original Fee:</span> <span class="line-through">₹2499</span></p>
+                    <p class="text-lg font-bold text-green-600">Early Bird: ₹2199</p>
+                    <p class="text-xs text-gray-600 mt-1"><span class="badge">till 26 Jan 2026</span></p>
+                </div>
+
+                <ul class="space-y-2 mb-6 text-gray-700 text-sm">
+                    <li class="flex items-start">
+                        <span class="text-orange mr-2">✓</span>
+                        <span>Learn 3 popular languages</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-orange mr-2">✓</span>
+                        <span>Build strong foundations</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-orange mr-2">✓</span>
+                        <span>Duration: 2.5 months</span>
+                    </li>
                 </ul>
+                
+                <a href="enroll-programming.html" class="block w-full text-center px-6 py-3 rounded-full bg-green-600 text-white font-semibold shadow-lg hover:shadow-xl transition-transform transform hover:scale-105">
+                    Enroll Now
+                </a>
             </div>
-            <div class="border rounded-2xl p-5">
-                <h2 class="text-xl font-semibold text-gray-900 mb-2">Pay via UPI</h2>
-                <p class="text-gray-700 mb-3">Send payment to UPI ID: <span class="font-semibold">9657894262@apl</span></p>
-                <div class="mt-3 mb-4">
-                    <h3 class="text-sm font-semibold text-gray-900 mb-2">Scan this QR to pay</h3>
-                    <img src="assets/upi-qr.png" alt="UPI QR Code" class="w-48 h-48 rounded-lg border shadow-sm"
-                         onerror="this.onerror=null;this.src='https://api.qrserver.com/v1/create-qr-code/?size=220x220&data='+encodeURIComponent('upi://pay?pa=9657894262@apl&cu=INR');" />
-                    <p class="text-xs text-gray-600 mt-2">Scan with Google Pay / Paytm or any UPI app and complete the payment.</p>
-                    <p class="text-xs text-gray-600 mt-2">Or copy the details below and pay manually in your UPI app.</p>
+
+            <div class="border-2 border-gray-200 rounded-2xl p-6 hover:shadow-xl transition-all duration-300 hover:border-orange-400">
+                <div class="text-center mb-4">
+                    <span class="text-5xl">🗂️</span>
                 </div>
-                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-                    <button id="copyUpi" class="px-3 py-2 rounded-md bg-gray-100 text-gray-800 text-sm border border-gray-300 hover:bg-gray-200">Copy UPI ID</button>
-                    <button id="copyMobile" class="px-3 py-2 rounded-md bg-gray-100 text-gray-800 text-sm border border-gray-300 hover:bg-gray-200">Copy Mobile Number</button>
+                <h3 class="text-2xl font-bold text-gray-800 mb-3 text-center">Data Structures</h3>
+                <p class="text-gray-600 text-center mb-4">Master DS for technical interviews</p>
+                
+                <div class="mb-4 p-4 bg-gray-50 rounded-lg">
+                    <p class="text-sm text-gray-700"><span class="font-semibold">Original Fee:</span> <span class="line-through">₹3500</span></p>
+                    <p class="text-lg font-bold text-green-600">Early Bird: ₹3000</p>
+                    <p class="text-xs text-gray-600 mt-1"><span class="badge">till 26 Jan 2026</span></p>
                 </div>
-                <p class="text-xs text-gray-600 mb-2">How to pay: Open your UPI app → Pay/Send → paste <span class="font-semibold">9657894262@apl</span> or <span class="font-semibold">9657894262</span> → enter amount (suggested <span class="font-semibold">₹2199</span>) → complete payment.</p>
-                <div class="mt-2 flex flex-wrap items-center gap-4 text-sm text-gray-600">
-                    <span class="flex items-center gap-1">🔒 Secure UPI</span>
-                    <span class="flex items-center gap-1">⏳ Limited seats</span>
-                    <span class="flex items-center gap-1">✅ Notes & doubt support</span>
-                </div>
-                <p class="mt-4 text-sm text-gray-700">Once you make the payment, please ping on WhatsApp with the payment screenshot: <a href="https://wa.me/919657894262" target="_blank" class="text-green-700 underline">Message on WhatsApp</a></p>
+
+                <ul class="space-y-2 mb-6 text-gray-700 text-sm">
+                    <li class="flex items-start">
+                        <span class="text-orange mr-2">✓</span>
+                        <span>Complete DS coverage</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-orange mr-2">✓</span>
+                        <span>Implementation from scratch</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-orange mr-2">✓</span>
+                        <span>Duration: 3 months</span>
+                    </li>
+                </ul>
+                
+                <a href="enroll-datastructure.html" class="block w-full text-center px-6 py-3 rounded-full bg-green-600 text-white font-semibold shadow-lg hover:shadow-xl transition-transform transform hover:scale-105">
+                    Enroll Now
+                </a>
             </div>
         </div>
-
-        
 
         <div class="mt-8 text-center">
             <p class="text-gray-700 mb-3">For any query related to course or fees, please contact me on</p>
@@ -101,66 +133,6 @@
             <a href="index.html" class="text-gray-600 underline">Back to Home</a>
         </div>
     </div>
-
-    <!-- Removed app picker modal -->
-
-    
-    <script>
-        (function () {
-            // Copy helpers only (manual payment flow)
-            var appConfigs = {
-                gpay: {
-                    label: 'Google Pay',
-                    scheme: 'tez://',
-                    intent: 'intent://upi/pay#Intent;scheme=upi;package=com.google.android.apps.nbu.paisa.user;end',
-                    store: 'market://details?id=com.google.android.apps.nbu.paisa.user'
-                },
-                phonepe: {
-                    label: 'PhonePe',
-                    scheme: 'phonepe://',
-                    intent: 'intent://upi/pay#Intent;scheme=upi;package=com.phonepe.app;end',
-                    store: 'market://details?id=com.phonepe.app'
-                },
-                paytm: {
-                    label: 'Paytm',
-                    scheme: 'paytmmp://',
-                    intent: 'intent://upi/pay#Intent;scheme=upi;package=net.one97.paytm;end',
-                    store: 'market://details?id=net.one97.paytm'
-                },
-                bhim: {
-                    label: 'BHIM',
-                    scheme: 'bhim://',
-                    intent: 'intent://upi/pay#Intent;scheme=upi;package=in.org.npci.upiapp;end',
-                    store: 'market://details?id=in.org.npci.upiapp'
-                }
-            };
-
-            // Removed Pay via UPI button logic (manual flow only)
-
-            // Copy helper remains for the small button on the page
-            // No secondary copy button in modal (modal removed)
-            var copyBtn = document.getElementById('copyUpi');
-            copyBtn && copyBtn.addEventListener('click', function(){
-                var upi = '9657894262@apl';
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(upi).then(function(){ alert('UPI ID copied: ' + upi); });
-                } else {
-                    var t = document.createElement('textarea');
-                    t.value = upi; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); alert('UPI ID copied: ' + upi); } catch(e) {} finally { document.body.removeChild(t); }
-                }
-            });
-            var copyMobile = document.getElementById('copyMobile');
-            copyMobile && copyMobile.addEventListener('click', function(){
-                var mobile = '9657894262';
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(mobile).then(function(){ alert('Mobile number copied: ' + mobile); });
-                } else {
-                    var t = document.createElement('textarea');
-                    t.value = mobile; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); alert('Mobile number copied: ' + mobile); } catch(e) {} finally { document.body.removeChild(t); }
-                }
-            });
-        })();
-    </script>
 </body>
 </html>
 

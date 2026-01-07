@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programming Fundamentals Enrollment - The Ultimate Coding Prep</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        html { scroll-behavior: smooth; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f8f8f8; color: #333; line-height: 1.6; }
+        .bg-pattern { background-image: linear-gradient(to right, #e5e7eb 1px, transparent 1px), linear-gradient(to bottom, #e5e7eb 1px, transparent 1px); background-size: 30px 30px; }
+        .bg-orange-gradient { background: linear-gradient(to right, #ff7043, #ff5722); }
+        .bg-safe-gradient { background: linear-gradient(to right, #22c55e, #16a34a); }
+        .cta-glitter {
+            position: relative;
+            overflow: hidden;
+            background-image: linear-gradient(90deg, #16a34a, #22c55e, #16a34a);
+            background-size: 200% 100%;
+            animation: gradientShift 3s linear infinite, glow 2.2s ease-in-out infinite alternate;
+            box-shadow: 0 8px 20px rgba(34, 197, 94, 0.35);
+        }
+        .cta-glitter::after {
+            content: "";
+            position: absolute;
+            top: -120%;
+            left: -30%;
+            width: 60%;
+            height: 340%;
+            transform: rotate(20deg);
+            background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.45) 50%, rgba(255,255,255,0) 100%);
+            animation: shine 2.8s ease-in-out infinite;
+        }
+        @keyframes gradientShift { 0% { background-position: 0% 0%; } 100% { background-position: 100% 0%; } }
+        @keyframes glow { 0% { box-shadow: 0 8px 18px rgba(34, 197, 94, 0.25); } 100% { box-shadow: 0 10px 26px rgba(34, 197, 94, 0.5); } }
+        @keyframes shine { 0% { left: -60%; } 100% { left: 120%; } }
+        @media (prefers-reduced-motion: reduce) {
+            .cta-glitter { animation: none; }
+            .cta-glitter::after { display: none; }
+        }
+        .coding-background { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.05"><text x="5" y="15" font-family="monospace" font-size="10" fill="%23000">class App{</text><text x="5" y="30" font-family="monospace" font-size="10" fill="%23000">  // Code here</text><text x="5" y="45" font-family="monospace" font-size="10" fill="%23000">}</text><text x="55" y="60" font-family="monospace" font-size="10" fill="%23000">const val=0;</text><text x="55" y="75" font-family="monospace" font-size="10" fill="%23000">def solve():</text><text x="55" y="90" font-family="monospace" font-size="10" fill="%23000">  pass</text></svg>'); background-repeat: repeat; background-size: 150px 150px; }
+        .fade-in { animation: fadeIn 1s ease-in-out forwards; opacity: 0; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .badge { background-color: #fff3cd; color: #b45309; padding: 0 0.5rem; border-radius: 0.375rem; display: inline-block; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%,100%{ transform: scale(1); } 50%{ transform: scale(1.06); } }
+    </style>
+</head>
+<body class="bg-pattern min-h-screen flex items-center justify-center p-4">
+
+    <div class="bg-white p-6 sm:p-12 md:p-16 rounded-3xl shadow-2xl max-w-3xl w-full fade-in coding-background" style="animation-delay: 0.2s;">
+        <div class="text-center">
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-2">Programming Fundamentals Enrollment</h1>
+            <div class="w-20 sm:w-24 h-1 bg-orange-gradient rounded-full mx-auto my-4"></div>
+            <p class="text-gray-700">Secure your seat for the 2.5-month, beginner-friendly programming course.</p>
+            <p class="text-lg font-semibold text-gray-800 mt-2">Master C++, Java & Python</p>
+        </div>
+
+        <div class="mt-8 grid sm:grid-cols-2 gap-6">
+            <div class="border rounded-2xl p-5">
+                <h2 class="text-xl font-semibold text-gray-900 mb-2">Fee Structure</h2>
+                <ul class="space-y-2 text-gray-700">
+                    <li><span class="font-semibold">Original Fee</span>: <span class="line-through">₹2499</span></li>
+                    <li><span class="font-semibold">Early Bird Offer</span>: <span class="text-green-600 font-bold">₹2199</span> <span class="badge">till 26 Jan 2026</span></li>
+                    <li class="text-sm text-gray-600">Duration: 2.5 months (75 days)</li>
+                    <li class="text-sm text-gray-600">Value: ₹2199 / 75 days ≈ <span class="font-semibold text-green-700">₹29/day</span> — cheaper than a cup of coffee</li>
+                </ul>
+            </div>
+            <div class="border rounded-2xl p-5">
+                <h2 class="text-xl font-semibold text-gray-900 mb-2">Pay via UPI</h2>
+                <p class="text-gray-700 mb-3">Send payment to UPI ID: <span class="font-semibold">9657894262@apl</span></p>
+                <div class="mt-3 mb-4">
+                    <h3 class="text-sm font-semibold text-gray-900 mb-2">Scan this QR to pay</h3>
+                    <img src="assets/upi-qr.png" alt="UPI QR Code" class="w-48 h-48 rounded-lg border shadow-sm"
+                         onerror="this.onerror=null;this.src='https://api.qrserver.com/v1/create-qr-code/?size=220x220&data='+encodeURIComponent('upi://pay?pa=9657894262@apl&cu=INR');" />
+                    <p class="text-xs text-gray-600 mt-2">Scan with Google Pay / Paytm or any UPI app and complete the payment.</p>
+                    <p class="text-xs text-gray-600 mt-2">Or copy the details below and pay manually in your UPI app.</p>
+                </div>
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                    <button id="copyUpi" class="px-3 py-2 rounded-md bg-gray-100 text-gray-800 text-sm border border-gray-300 hover:bg-gray-200">Copy UPI ID</button>
+                    <button id="copyMobile" class="px-3 py-2 rounded-md bg-gray-100 text-gray-800 text-sm border border-gray-300 hover:bg-gray-200">Copy Mobile Number</button>
+                </div>
+                <p class="text-xs text-gray-600 mb-2">How to pay: Open your UPI app → Pay/Send → paste <span class="font-semibold">9657894262@apl</span> or <span class="font-semibold">9657894262</span> → enter amount (suggested <span class="font-semibold">₹2199</span>) → complete payment.</p>
+                <div class="mt-2 flex flex-wrap items-center gap-4 text-sm text-gray-600">
+                    <span class="flex items-center gap-1">🔒 Secure UPI</span>
+                    <span class="flex items-center gap-1">⏳ Limited seats</span>
+                    <span class="flex items-center gap-1">✅ Notes & doubt support</span>
+                </div>
+                <p class="mt-4 text-sm text-gray-700">Once you make the payment, please ping on WhatsApp with the payment screenshot: <a href="https://wa.me/919657894262" target="_blank" class="text-green-700 underline">Message on WhatsApp</a></p>
+            </div>
+        </div>
+
+        <div class="mt-8 text-center">
+            <p class="text-gray-700 mb-3">For any query related to course or fees, please contact me on</p>
+            <a href="https://wa.me/919657894262" target="_blank" class="inline-block transition-transform transform hover:scale-110">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Logo" class="w-10 h-10 inline-block" />
+            </a>
+        </div>
+
+        <div class="mt-6 text-center">
+            <a href="index.html" class="text-gray-600 underline">Back to Home</a>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            var copyBtn = document.getElementById('copyUpi');
+            copyBtn && copyBtn.addEventListener('click', function(){
+                var upi = '9657894262@apl';
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(upi).then(function(){ alert('UPI ID copied: ' + upi); });
+                } else {
+                    var t = document.createElement('textarea');
+                    t.value = upi; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); alert('UPI ID copied: ' + upi); } catch(e) {} finally { document.body.removeChild(t); }
+                }
+            });
+            var copyMobile = document.getElementById('copyMobile');
+            copyMobile && copyMobile.addEventListener('click', function(){
+                var mobile = '9657894262';
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(mobile).then(function(){ alert('Mobile number copied: ' + mobile); });
+                } else {
+                    var t = document.createElement('textarea');
+                    t.value = mobile; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); alert('Mobile number copied: ' + mobile); } catch(e) {} finally { document.body.removeChild(t); }
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
+
